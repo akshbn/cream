@@ -5,14 +5,15 @@ def createWebs(names,themes):
     cwd = os.getcwd()
     os.makedirs(names)
     files = "%s/%s" % (names,names+"Config.py")
-    with open('webconfig.py','r') as origin:
+    with open(os.path.dirname(os.path.realpath(__file__))+'/webconfig.py','r') as origin:
         contents = origin.read()
         from string import Template
         subs = Template(contents)
         renderedTemplate = subs.substitute(name = names,theme = themes)
         with open(files,'w') as dest:
             dest.write(renderedTemplate)
-    pageTemplate(names)
+    layouts = ['cover']
+    pageTemplate(names,layouts)
 
 def generateWebs(path):
     from os import listdir,chdir
@@ -49,14 +50,20 @@ def render(module_imp,config_fi):
         with open('../../assets/html/CoverPage.html','r') as origin:
             content = origin.read()
             from string import Template
+            from .helper_functions import asset_path
+            asset_dir = asset_path()
+            bootstrapcss = asset_dir + '/css/bootstrap.min.css'
+            bootstrapjs = asset_dir + '/js/bootstrap.min.js'
+            covercss = asset_dir + '/css/CoverPage.css'
             temp = Template(content)
-            tst = temp.substitute(brand = config_fi.name,nav1 = module_imp.nav1,nav2 = module_imp.nav2,nav3 = module_imp.nav3,heading = module_imp.headline,text = module_imp.text)
+            tst = temp.substitute(brand = config_fi.name,nav1 = module_imp.nav1,nav2 = module_imp.nav2,nav3 = module_imp.nav3,heading = module_imp.headline,text = module_imp.text,bootstrapCss=bootstrapcss,\
+            bootstrapJs=bootstrapjs,pageCss=covercss)
             with open('edited.html','w') as desti:
                 desti.write(tst)
-            with open('CoverTemp/cover.css','r') as origin:
-                content = origin.read()
-                from string import Template
-                temp = Template(content)
-                csstr = temp.substitute(bimg = module_imp.background_image)
-                with open('edited.css','w') as desti:
-                    desti.write(csstr)
+            # with open('CoverTemp/cover.css','r') as origin:
+            #     content = origin.read()
+            #     from string import Template
+            #     temp = Template(content)
+            #     csstr = temp.substitute(bimg = module_imp.background_image)
+            #     with open('edited.css','w') as desti:
+            #         desti.write(csstr)

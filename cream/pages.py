@@ -34,11 +34,13 @@ def get_bstrap_theme(theme_name):
         destination_file.write(theme_content)
     return theme_content
 
-def pageTemplate(name):
-    path2assets = os.path.dirname(os.path.realpath(__file__)).split('/')
+def pageTemplate(name,layouts):
+    from .helper_functions import asset_path
+    asset_dir_path = asset_path()
     cwd = os.getcwd()
     destination_folder = "%s/%s/" % (cwd,name)
-    with open('/'.join(path2assets[:-1])+'/assets/config/cover.py','r') as origin:
-        contents = origin.read()
-        with open(cwd+'/'+name+"/coverMod.py",'w') as desti:
-            desti.write(contents)
+    for layout in layouts:
+        with open(asset_dir_path+'/config/'+layout+'.py','r') as origin:
+            contents = origin.read()
+            with open(cwd+'/'+name+"/"+layout+"Mod.py",'w') as desti:
+                desti.write(contents)
