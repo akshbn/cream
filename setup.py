@@ -10,8 +10,8 @@ license = 'MIT',
 author = 'Akshay B N',
 description = 'Scaffolding and templating engine experiment',
 zip_safe = False,
-include_package_data = True,
+package_data = {'html':'*.html','css':'*.css','js':'*.js'},
 url = 'https://github.com/akshbn/creamware',
-packages = ['cream'],
+packages = ['cream','assets'],
 entry_points = {"console_scripts":["cream=cream.cream:main"]}
 )
