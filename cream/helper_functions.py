@@ -10,3 +10,7 @@ def asset_path():
     asset_dir.append('assets')
     asset_dir_path = folder_separator.join(asset_dir)
     return asset_dir_path
+
+def convert_to_linuxpath(win_path):
+    temp = win_path.split('\\')
+    return '/'.join(temp)

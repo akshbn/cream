@@ -16,48 +16,55 @@ def createWebs(names,themes):
     pageTemplate(names,layouts)
 
 def generateWebs(path):
-    from os import listdir,chdir
+    from os import listdir,chdir,getcwd
     file_list = listdir(path)
     print(file_list)
     is_present = 0
     import re
-    fpattern = re.compile('((\w+)Config)\.py$')
+    fpattern = re.compile('^((\w+)Config)\.py$')
     chdir(path)
+    import sys
+    sys.path.append(getcwd())
+    print(getcwd())
     for file in file_list:
         extractor = fpattern.match(file)
         if extractor != None:
             folder_name = extractor.group(2)
-            file_name = extractor.group(2)+'.'+extractor.group(1)
+            file_name = extractor.group(1)
             print(file_name)
             is_present = 1
             from importlib import import_module
             config = import_module(file_name)
             module_list = dir(config)
             print("module list = ",module_list)
-            module_pattern = re.compile('(\w+Mod)$')
+            module_pattern = re.compile('^((\w+)Mod).*')
             for module in module_list:
                 ext_module = module_pattern.match(module)
                 if ext_module != None:
-                    mod_name = folder_name+'.'+ext_module.group(1)
+                    mod_name = ext_module.group(1)
                     module_imp = import_module(mod_name)
                     render(module_imp,config)
     if is_present == 0:
         print("Cream couldn't find any Config file in this directory. Cd to your Config directory created using website command")
 
 def render(module_imp,config_fi):
-    print(module_imp)
+    from .helper_functions import asset_path,convert_to_linuxpath
     if module_imp.mod_type is "cover":
-        with open('../../assets/html/CoverPage.html','r') as origin:
+        asset_dir = asset_path()
+        coverpage = asset_dir + "\html\CoverPage.html"
+        with open(coverpage,'r') as origin:
             content = origin.read()
             from string import Template
-            from .helper_functions import asset_path
-            asset_dir = asset_path()
-            bootstrapcss = asset_dir + '/css/bootstrap.min.css'
-            bootstrapjs = asset_dir + '/js/bootstrap.min.js'
-            covercss = asset_dir + '/css/CoverPage.css'
+            bcss = "file:///"+ asset_dir + "/css/bootstrap.min.css"
+            bjs = "file:///"+ asset_dir + "/js/bootstrap.min.js"
+            covcss = "file:///"+ asset_dir + "/css/CoverPage.css"
+            bootstrapcss = "<link href='"+convert_to_linuxpath(bcss)+"' rel='stylesheet'>"
+            bootstrapjs = convert_to_linuxpath(bjs)
+            covercss = convert_to_linuxpath(covcss)
             temp = Template(content)
-            tst = temp.substitute(brand = config_fi.name,nav1 = module_imp.nav1,nav2 = module_imp.nav2,nav3 = module_imp.nav3,heading = module_imp.headline,text = module_imp.text,bootstrapCss=bootstrapcss,\
-            bootstrapJs=bootstrapjs,pageCss=covercss)
+            tst = temp.substitute(bootstrapCss=bootstrapcss,bootstrapJs=bootstrapjs,pageCss=covercss,brand = bootstrapcss,nav1 = module_imp.nav1,nav2 = module_imp.nav2,nav3 = module_imp.nav3,heading = module_imp.headline,text = module_imp.text)
+            print(tst)
+            print(bootstrapcss)
             with open('edited.html','w') as desti:
                 desti.write(tst)
             # with open('CoverTemp/cover.css','r') as origin:
