@@ -1,7 +1,7 @@
 # -*- Coding utf-8 -*-
 import sys
 
-from setuptools import setup
+from setuptools import setup,find_packages
 
 setup(
 name = 'cream',
@@ -10,8 +10,8 @@ license = 'MIT',
 author = 'Akshay B N',
 description = 'Scaffolding and templating engine experiment',
 zip_safe = False,
-package_data = {'html':'*.html','css':'*.css','js':'*.js'},
 url = 'https://github.com/akshbn/creamware',
-packages = ['cream','assets'],
+packages = find_packages(),
+package_data = {'assets.html':['*.html'],'assets.css':['*.css'],'js':['*.js']},
 entry_points = {"console_scripts":["cream=cream.cream:main"]}
 )

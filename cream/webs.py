@@ -58,11 +58,13 @@ def render(module_imp,config_fi):
             bcss = "file:///"+ asset_dir + "/css/bootstrap.min.css"
             bjs = "file:///"+ asset_dir + "/js/bootstrap.min.js"
             covcss = "file:///"+ asset_dir + "/css/CoverPage.css"
-            bootstrapcss = "<link href='"+convert_to_linuxpath(bcss)+"' rel='stylesheet'>"
+            bootstrapcss = convert_to_linuxpath(bcss)
             bootstrapjs = convert_to_linuxpath(bjs)
             covercss = convert_to_linuxpath(covcss)
             temp = Template(content)
-            tst = temp.substitute(bootstrapCss=bootstrapcss,bootstrapJs=bootstrapjs,pageCss=covercss,brand = bootstrapcss,nav1 = module_imp.nav1,nav2 = module_imp.nav2,nav3 = module_imp.nav3,heading = module_imp.headline,text = module_imp.text)
+            tst = temp.substitute(bootstrapCss=bootstrapcss,bootstrapJs=bootstrapjs,pageCss=covercss,\
+            brand = config_fi.name,nav1 = module_imp.nav1,nav2 = module_imp.nav2,nav3 = module_imp.nav3,\
+            heading = module_imp.headline,text = module_imp.text)
             print(tst)
             print(bootstrapcss)
             with open('edited.html','w') as desti:
