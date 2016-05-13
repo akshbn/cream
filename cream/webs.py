@@ -51,7 +51,10 @@ def render(module_imp,config_fi):
     from .helper_functions import asset_path,convert_to_linuxpath
     if module_imp.mod_type is "cover":
         asset_dir = asset_path()
-        coverpage = asset_dir + "\html\CoverPage.html"
+        if os.name == 'nt':
+            coverpage = asset_dir + "\html\CoverPage.html"
+        else:
+            coverpage = asset_dir + "/html/CoverPage.html"
         with open(coverpage,'r') as origin:
             content = origin.read()
             from string import Template
@@ -65,8 +68,8 @@ def render(module_imp,config_fi):
             tst = temp.substitute(bootstrapCss=bootstrapcss,bootstrapJs=bootstrapjs,pageCss=covercss,\
             brand = config_fi.name,nav1 = module_imp.nav1,nav2 = module_imp.nav2,nav3 = module_imp.nav3,\
             heading = module_imp.headline,text = module_imp.text)
-            print(tst)
-            print(bootstrapcss)
+            #print(tst)
+            #print(bootstrapcss)
             with open('edited.html','w') as desti:
                 desti.write(tst)
             # with open('CoverTemp/cover.css','r') as origin:
