@@ -36,6 +36,15 @@ Installation
 
     python3 setup.py install
 
+**Note:** ::
+
+    Make sure you have setuptools installed on your machine as some
+    environments dont come with it.
+
+To install ``setuptools`` in Ubuntu, use ::
+
+    sudo apt-get install python3-setuptools
+
 cream will be installed and a script ``cream`` will be available for use.
 
 
@@ -52,7 +61,7 @@ Config file
 
 1. Create the config files by typing ::
 
-    cream website <website_name>
+    cream website --theme <theme_name/default> <website_name>
 
 2. A folder <website_name> will be created with config files for different pages of the website.
 
@@ -63,7 +72,7 @@ Config file
 Create Website
 ---------------
 
-1. Cd into the folder containing the config files.
+1. ``cd`` into the folder containing the config files.
 
 2. Use ``cream`` to create the website by using the following command ::
 
