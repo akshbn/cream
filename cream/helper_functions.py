@@ -1,7 +1,10 @@
 import os
 
 def asset_path():
-    if os.name == 'nt':
+    '''
+    Returns the assets folder path.
+    '''
+    if os.name == 'nt': #In windows '\' is used as a directory separator.
         folder_separator = '\\'
     else:
         folder_separator = '/'
@@ -12,5 +15,8 @@ def asset_path():
     return asset_dir_path
 
 def convert_to_linuxpath(win_path):
+    '''
+    Converts a windows file path to a linux file path.
+    ''' 
     temp = win_path.split('\\')
     return '/'.join(temp)
