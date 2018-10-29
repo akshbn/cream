@@ -2,6 +2,9 @@ import os
 from .pages import pageTemplate
 
 def createWebs(names,themes):
+    '''
+    Creates a website configuration from given templates and layouts.
+    '''
     cwd = os.getcwd()
     os.makedirs(names)
     files = "%s/%s" % (names,names+"Config.py")
@@ -16,6 +19,9 @@ def createWebs(names,themes):
     pageTemplate(names,layouts)
 
 def generateWebs(path):
+    '''
+    Generates a website from the existing website configuration.
+    ''''
     from os import listdir,chdir,getcwd
     file_list = listdir(path)
     print(file_list)
@@ -48,6 +54,9 @@ def generateWebs(path):
         print("Cream couldn't find any Config file in this directory. Cd to your Config directory created using website command")
 
 def render(module_imp,config_fi):
+    '''
+    Converts a webpage configuration to a webpage.
+    '''
     from .helper_functions import asset_path,convert_to_linuxpath
     if module_imp.mod_type is "cover":
         asset_dir = asset_path()
