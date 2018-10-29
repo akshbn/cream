@@ -8,7 +8,7 @@ Need
 =====
 
 Most websites contain the same boilerplate of code. Hence it will be ideal to save time and effort
-by using them and only modify its contents. But then, you will have to go through the
+by using them by only modifying their contents. But, you will have to go through the
 code and make modifications at all the required places. Later you have to check whether all aspects
 of the website are working properly.
 
