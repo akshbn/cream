@@ -5,6 +5,11 @@ from .fetch import getassets
 from .webs import createWebs,generateWebs
 
 def main():
+    '''
+    This is the entry point of the script.
+
+    Command line arguments are parsed and appropriate functions are called.
+    '''
     parser = argparse.ArgumentParser()
     parser.add_argument("--fetch",action='store_const',const='all',help = "fetch all bootstrap themes from bootswatch.com")
     parser.add_argument("-v","--version",action='store_const',const='all',help="Displays the version number")
